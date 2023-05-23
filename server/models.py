@@ -16,6 +16,8 @@ class User(db.Model, SerializerMixin):
     created_at=db.Column(db.DateTime, server_default= db.func.now())
     updated_at=db.Column(db.DateTime, onupdate=db.func.now())
 
+    serialize_rules = ('-created_at','-updated_at' )
+
     teams = db.relationship('Team', secondary='team_members', backref='members')
    
     def __repr__(self):
@@ -30,6 +32,8 @@ class Team(db.Model, SerializerMixin):
     updated_at=db.Column(db.DateTime, onupdate=db.func.now())
 
     tournaments = db.relationship('Tournament', secondary='tournament_teams', backref='teams')
+
+    serialize_rules = ('-created_at','-updated_at' )
 
     def __repr__(self):
         return f'<Team {self.id} :: {self.name}>'
@@ -48,6 +52,8 @@ class Tournament(db.Model, SerializerMixin):
 
     matches = db.relationship('Match', backref='tournament')
 
+    serialize_rules = ('-created_at','-updated_at' )
+
     def __repr__(self):
         return f'<Tournament {self.id} :: {self.title}>'
    
@@ -63,6 +69,8 @@ class Match(db.Model, SerializerMixin):
     winner_id = db.Column(db.Integer, db.ForeignKey('team.id'))
     created_at=db.Column(db.DateTime, server_default= db.func.now())
     updated_at=db.Column(db.DateTime, onupdate=db.func.now())
+
+    serialize_rules = ('-created_at','-updated_at' )
 
     def __repr__(self):
         return f'<Match {self.id} :: Team 1: {self.team1_id}, Team 2: {self.team2_id}>'
