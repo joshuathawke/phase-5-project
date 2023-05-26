@@ -9,7 +9,7 @@ import os
 app = Flask(__name__)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///esports.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://joshuahawke:R74RGtdiCDBbcqIa0B9oIukNWMulWM3T@dpg-chnno0m4dad1d57938d0-a.ohio-postgres.render.com/esports_rw32"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SESSION_COOKIE_SAMESITE"] = "None"
 app.config["SESSION_COOKIE_SECURE"] = True
