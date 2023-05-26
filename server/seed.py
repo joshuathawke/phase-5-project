@@ -1,7 +1,6 @@
 from faker import Faker
+from config import app, db 
 from models import db, User, Team, Tournament, Match
-from config import app
-
 
 app.app_context().push()
 
@@ -15,18 +14,18 @@ def make_users(num_users):
 
         user = User(username=username, email=email, password=password)
 
-    db.session.add(user)
-    db.session.commit()
-    
+        db.session.add(user)
+        db.session.commit()
 
 def make_teams(num_teams):
     for _ in range(num_teams):
         name = fake.word()
+        city = fake.city()
+        country = fake.country()
+        team = Team(name=name, city=city, country=country)
 
-        team = Team(name=name)
-        
-    db.session.add(team)
-    db.session.commit()
+        db.session.add(team)
+        db.session.commit()
 
 def make_tournaments(num_tournaments):
     for _ in range(num_tournaments):
@@ -36,8 +35,8 @@ def make_tournaments(num_tournaments):
 
         tournament = Tournament(title=title, description=description, game_title=game_title)
 
-    db.session.add(tournament)
-    db.session.commit()
+        db.session.add(tournament)
+        db.session.commit()
 
 def make_matches(num_matches):
     teams = Team.query.all()
@@ -51,11 +50,14 @@ def make_matches(num_matches):
         end_time = start_time + fake.time_delta()
 
         match = Match(team1=team1, team2=team2, tournament=tournament, start_time=start_time, end_time=end_time)
-        
-    db.session.add(match)
-    db.session.commit()
+    
+        db.session.add(match)
+        db.session.commit()
+
 
 def make_all():
+    db.create_all()  
+
     num_users = 10
     num_teams = 5
     num_tournaments = 3
